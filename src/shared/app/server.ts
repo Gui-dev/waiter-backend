@@ -11,19 +11,22 @@ const PORT = 3333 || process.env.PORT
 
 mongoose.connect('mongodb://localhost:27017')
   .then(() => {
+    app.use(express.json())
     app.use(cors())
     app.use(routes)
-    app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
+    app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
       if (err instanceof AppError) {
-        response.status(err.statusCode).json({
-          error: err.message
+        return response.status(err.statusCode).json({
+          status: 'error',
+          message: err.message
         })
       }
 
-      console.log(err)
+      console.error(err)
 
-      response.status(500).json({
-        error: 'Erro no Servidor'
+      return response.status(500).json({
+        status: 'error',
+        message: 'Internal server error'
       })
     })
     console.log('Conectado ao database')
