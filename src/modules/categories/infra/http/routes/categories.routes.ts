@@ -6,9 +6,7 @@ const category = new CategoryController()
 
 categoriesRoutes.get('/categories', category.index)
 
-categoriesRoutes.post('/categories', (req, res) => {
-  res.send('OK')
-})
+categoriesRoutes.post('/categories', category.store)
 
 export {
   categoriesRoutes
