@@ -1,10 +1,11 @@
 import { Router } from 'express'
 
-const productsRoutes = Router()
+import { ProductController } from './../controllers/ProductController'
 
-productsRoutes.get('/products', (req, res) => {
-  res.send('OK')
-})
+const productsRoutes = Router()
+const product = new ProductController()
+
+productsRoutes.get('/products', product.index)
 
 productsRoutes.post('/products', (req, res) => {
   res.send('OK')
