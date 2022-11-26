@@ -1,6 +1,11 @@
-import { model, Schema } from 'mongoose'
+import { Document, Model, model, Schema } from 'mongoose'
 
-export const Category = model('Category', new Schema({
+export interface ICategory extends Document {
+  name: string
+  icon: string
+}
+
+const CategorySchema: Schema = new Schema({
   name: {
     type: String,
     required: true
@@ -9,4 +14,6 @@ export const Category = model('Category', new Schema({
     type: String,
     required: true
   }
-}))
+})
+
+export const Category: Model<ICategory> = model<ICategory>('Category', CategorySchema)

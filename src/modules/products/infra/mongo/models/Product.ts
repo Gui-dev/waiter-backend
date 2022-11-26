@@ -1,6 +1,18 @@
-import { model, Schema } from 'mongoose'
+import { Document, Model, model, Schema } from 'mongoose'
 
-export const Product = model('Product', new Schema({
+export interface IProduct extends Document {
+  name: string
+  description: string
+  imagePath: string
+  price: number
+  ingredients: {
+    name: string
+    icon: string
+  }[]
+  category: string
+}
+
+const ProductSchema: Schema = new Schema({
   name: {
     type: String,
     required: true
@@ -37,4 +49,6 @@ export const Product = model('Product', new Schema({
     ref: 'Category',
     required: true
   }
-}))
+})
+
+export const Product: Model<IProduct> = model<IProduct>('Product', ProductSchema)
