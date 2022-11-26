@@ -16,6 +16,10 @@ export class CreateCategoriesUseCase {
       icon
     })
 
+    if (!category) {
+      throw new AppError('Error creating category')
+    }
+
     return category
   }
 }
