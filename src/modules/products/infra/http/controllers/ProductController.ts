@@ -18,7 +18,7 @@ export class ProductController {
     const dataParse = {
       ...data,
       imagePath,
-      ingredients: JSON.parse(data.ingredients)
+      ingredients: data.ingredients ? JSON.parse(data.ingredients) : []
     }
     const result: CreateProductsProps = createProductValidation.parse(dataParse)
     const createProduct = new CreateProductsUseCase()

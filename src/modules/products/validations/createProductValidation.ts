@@ -10,6 +10,6 @@ export const createProductValidation = z.object({
     z.object({
       name: z.string(),
       icon: z.string()
-    })
+    }).nullable()
   )
 })

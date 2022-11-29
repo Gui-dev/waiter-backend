@@ -7,10 +7,10 @@ export type CreateProductsProps = {
   description: string
   imagePath: string
   price: number
-  ingredients: {
+  ingredients: Array<{
     name: string
     icon: string
-  }[]
+  } | null>
 }
 
 export class CreateProductsUseCase {

@@ -10,10 +10,6 @@ productsRoutes.get('/products', product.index)
 
 productsRoutes.post('/products', upload.single('image'), product.store)
 
-productsRoutes.get('/categories/:categoty_id/products', (req, res) => {
-  res.send('OK')
-})
-
 export {
   productsRoutes
 }
