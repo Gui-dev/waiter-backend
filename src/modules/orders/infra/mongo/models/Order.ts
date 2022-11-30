@@ -1,7 +1,7 @@
 import { Document, Model, model, Schema } from 'mongoose'
 import { IProduct } from '../../../../products/infra/mongo/models/Product'
 
-interface IOrder extends Document {
+export interface IOrder extends Document {
   table: string
   status: string
   products: IProduct[]
