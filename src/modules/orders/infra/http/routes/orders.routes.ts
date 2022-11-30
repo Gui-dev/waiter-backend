@@ -1,10 +1,11 @@
 import { Router } from 'express'
 
-const ordersRoutes = Router()
+import { OrderController } from './../controllers/OrderController'
 
-ordersRoutes.get('/orders', (req, res) => {
-  res.send('OK')
-})
+const ordersRoutes = Router()
+const order = new OrderController()
+
+ordersRoutes.get('/orders', order.index)
 
 ordersRoutes.post('/orders', (req, res) => {
   res.send('OK')
