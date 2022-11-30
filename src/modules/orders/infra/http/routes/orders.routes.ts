@@ -7,9 +7,7 @@ const order = new OrderController()
 
 ordersRoutes.get('/orders', order.index)
 
-ordersRoutes.post('/orders', (req, res) => {
-  res.send('OK')
-})
+ordersRoutes.post('/orders', order.store)
 
 ordersRoutes.patch('/orders/:order_id', (req, res) => {
   res.send('OK')
