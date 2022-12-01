@@ -3,6 +3,8 @@ import { Request, Response } from 'express'
 import { ListOrdersUseCase } from '../../../useCases/ListOrdersUseCase'
 import { CreateOrdersUseCase } from '../../../useCases/CreateOrdersUseCase'
 import { createOrderValidation } from '../../../validations/createOrderValidation'
+import { UpdateOrderStatusUseCase } from '../../../useCases/UpdateOrderStatusUseCase'
+import { updateStatusValidation } from '../../../validations/updateStatusValidation'
 
 export class OrderController {
   public async index (request: Request, response: Response): Promise<Response> {
@@ -19,5 +21,17 @@ export class OrderController {
       products
     })
     return response.status(201).json(order)
+  }
+
+  public async update (request: Request, response: Response): Promise<Response> {
+    const { order_id } = request.params
+    const { status } = request.body
+    const data = updateStatusValidation.parse({ order_id, status })
+    const updateOrderStatusUseCase = new UpdateOrderStatusUseCase()
+    await updateOrderStatusUseCase.execute({
+      order_id: data.order_id,
+      status: data.status.toUpperCase()
+    })
+    return response.sendStatus(204)
   }
 }

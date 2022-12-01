@@ -9,9 +9,7 @@ ordersRoutes.get('/orders', order.index)
 
 ordersRoutes.post('/orders', order.store)
 
-ordersRoutes.patch('/orders/:order_id', (req, res) => {
-  res.send('OK')
-})
+ordersRoutes.patch('/orders/:order_id', order.update)
 
 ordersRoutes.delete('/orders/:order_id', (req, res) => {
   res.send('OK')
