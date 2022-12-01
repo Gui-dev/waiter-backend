@@ -6,6 +6,7 @@ import { resolve } from 'node:path'
 
 import { routes } from './routes'
 import { AppError } from '../error/AppError'
+import { ZodError } from 'zod'
 
 const app = express()
 const PORT = 3333 || process.env.PORT
@@ -21,6 +22,11 @@ mongoose.connect('mongodb://localhost:27017/waiter-app')
         return response.status(err.statusCode).json({
           status: 'error',
           message: err.message
+        })
+      } else if (err instanceof ZodError) {
+        return response.status(400).json({
+          status: 'error',
+          message: err.errors[0].message
         })
       }
 
