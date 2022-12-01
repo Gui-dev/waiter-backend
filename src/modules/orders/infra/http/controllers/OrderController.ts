@@ -5,6 +5,8 @@ import { CreateOrdersUseCase } from '../../../useCases/CreateOrdersUseCase'
 import { createOrderValidation } from '../../../validations/createOrderValidation'
 import { UpdateOrderStatusUseCase } from '../../../useCases/UpdateOrderStatusUseCase'
 import { updateStatusValidation } from '../../../validations/updateStatusValidation'
+import { deleteOrderValidation } from '../../../validations/deleteOrderValidation'
+import { DeleteOrderUseCase } from '../../../useCases/DeleteOrderUseCase'
 
 export class OrderController {
   public async index (request: Request, response: Response): Promise<Response> {
@@ -31,6 +33,15 @@ export class OrderController {
     await updateOrderStatusUseCase.execute({
       order_id: data.order_id,
       status: data.status.toUpperCase()
+    })
+    return response.sendStatus(204)
+  }
+
+  public async delete (request: Request, response: Response): Promise<Response> {
+    const { order_id } = deleteOrderValidation.parse(request.params)
+    const deleteOrderUseCase = new DeleteOrderUseCase()
+    await deleteOrderUseCase.execute({
+      order_id
     })
     return response.sendStatus(204)
   }
