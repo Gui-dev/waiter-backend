@@ -3,16 +3,18 @@ import 'express-async-errors'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import { resolve } from 'node:path'
+import http from 'node:http'
 
 import { routes } from './routes'
 import { AppError } from '../error/AppError'
 import { ZodError } from 'zod'
 
-const app = express()
 const PORT = 3333 || process.env.PORT
 
 mongoose.connect('mongodb://localhost:27017/waiter-app')
   .then(() => {
+    const app = express()
+    const server = http.createServer(app)
     app.use(express.json())
     app.use(cors())
     app.use('/uploads', express.static(resolve(__dirname, '..', '..', '..', 'uploads')))
@@ -38,7 +40,7 @@ mongoose.connect('mongodb://localhost:27017/waiter-app')
       })
     })
     console.log('Conectado ao database')
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`)
     })
   })
