@@ -4,17 +4,19 @@ import cors from 'cors'
 import mongoose from 'mongoose'
 import { resolve } from 'node:path'
 import http from 'node:http'
+import { Server } from 'socket.io'
 
 import { routes } from './routes'
 import { AppError } from '../error/AppError'
 import { ZodError } from 'zod'
 
 const PORT = 3333 || process.env.PORT
+const app = express()
+const server = http.createServer(app)
+export const io = new Server(server)
 
 mongoose.connect('mongodb://localhost:27017/waiter-app')
   .then(() => {
-    const app = express()
-    const server = http.createServer(app)
     app.use(express.json())
     app.use(cors())
     app.use('/uploads', express.static(resolve(__dirname, '..', '..', '..', 'uploads')))

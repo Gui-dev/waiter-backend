@@ -1,5 +1,6 @@
 import { AppError } from '../../../shared/error/AppError'
 import { IOrder, Order } from '../infra/mongo/models/Order'
+import { io } from './../../../shared/app/server'
 
 interface ICreateOrdersUseCase {
   table: string
@@ -18,6 +19,8 @@ export class CreateOrdersUseCase {
     if (!order) {
       throw new AppError('Error creating order')
     }
+    const orderDetails = await order.populate('products.product')
+    io.emit('order@new', orderDetails)
     return order
   }
 }
